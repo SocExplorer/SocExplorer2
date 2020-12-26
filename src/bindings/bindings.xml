@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<typesystem package="SocExplorerBindings">
+    <load-typesystem name="typesystem_core.xml" generate="no" />
+    <load-typesystem name="typesystem_gui.xml" generate="no" />
+    <load-typesystem name="typesystem_widgets.xml" generate="no" />
+
+    <primitive-type name="bool"/>
+    <primitive-type name="uint64_t"/>
+
+    <namespace-type name="SocExplorer">
+        <object-type name="SocModule"/>
+        <object-type name="PySocModule"/>
+    </namespace-type>
+</typesystem>
