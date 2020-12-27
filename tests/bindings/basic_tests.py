@@ -27,6 +27,12 @@ class APlugin(unittest.TestCase):
         p = SocExplorer.PySocModule(name)
         self.assertEqual(p.name(), name)
 
+    @data("", "SomeRandomName", "1otherN@me")
+    def test_can_be_renamed(self, name):
+        p = SocExplorer.PySocModule("")
+        p.set_name(name)
+        self.assertEqual(p.name(), name)
+
 
 class APluginHierarchy(unittest.TestCase):
     def setUp(self):

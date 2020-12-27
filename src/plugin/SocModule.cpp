@@ -21,10 +21,15 @@
 ----------------------------------------------------------------------------*/
 
 #include "SocModule.hpp"
-#include <range/v3/view.hpp>
 #include <iostream>
 
-uint64_t SocExplorer::SocModule::read(const address64_t address, std::size_t bytes, char* data)
+void SocExplorer::SocModule::set_name(const QString &name)
+{
+    this->setObjectName(name);
+    emit name_changed(name);
+}
+
+uint64_t SocExplorer::SocModule::read(const address64_t address, std::size_t bytes, char* data) const
 {
     auto p = parent();
     if (p)
@@ -34,7 +39,7 @@ uint64_t SocExplorer::SocModule::read(const address64_t address, std::size_t byt
     return 0UL;
 }
 
-uint64_t SocExplorer::SocModule::write(const address64_t address, std::size_t bytes, char* data)
+uint64_t SocExplorer::SocModule::write(const address64_t address, std::size_t bytes, char* data) const
 {
     auto p = parent();
     if (p)
@@ -51,13 +56,15 @@ SocExplorer::SocModule* SocExplorer::SocModule::parent() const
 
 std::vector<SocExplorer::SocModule*> SocExplorer::SocModule::children()const
 {
+    using namespace ranges::views;
     return QObject::children()
-        | ranges::views::transform([](QObject* qobject) { return qobject_cast<SocModule*>(qobject); })
-        | ranges::views::remove_if([](SocModule* plugin) { return plugin == nullptr; })
+        | transform([](QObject* qobject) { return qobject_cast<SocModule*>(qobject); })
+        | remove_if([](SocModule* plugin) { return plugin == nullptr; })
         | ranges::to<std::vector>;
 }
 
 SocExplorer::SocModule::SocModule(const QString& name, QObject* parent)
-        : QObject(parent), m_name(name)
+        : QObject(parent)
 {
+    set_name(name);
 }
