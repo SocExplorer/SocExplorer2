@@ -27,9 +27,8 @@ foreach mod:qt5_modules
     socexplorer_bindings_incs += ['-I'+qt_headers_path+'/'+mod]
 endforeach
 
-socexplorer_bindings_src = files('bindings.h', '../plugin/SocModule.hpp',
-                                 '../plugin/SocModule.cpp','PySocModule.hpp',
-                                 'PySocModule.cpp')
+socexplorer_bindings_src = [files('bindings.h','PySocModule.hpp', 'PySocModule.cpp'),
+                            socexplorer_src, socexplorer_headers]
 
 subdir('SocExplorerBindings')
 

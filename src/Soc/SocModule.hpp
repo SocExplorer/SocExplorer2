@@ -22,25 +22,23 @@
 #pragma once
 #include <QObject>
 #include <QWidget>
-#include <QtPlugin>
 
 #include <cstdint>
 #include <vector>
 
-#include "address.h"
 #include <range/v3/view.hpp>
+
+#include "address.h"
+#include "SocExplorerObject.hpp"
 
 namespace SocExplorer
 {
-class SocModule : public QObject
+class SocModule : public SocExplorerObject
 {
     Q_OBJECT
 public:
     const uint64_t vid = -1;
     const uint64_t pid = -1;
-
-    QString name() const { return objectName(); }
-    void set_name(const QString& name);
 
     address64_t base_address() const { return m_base_address; }
     bool is_connected() const { return m_is_connected; }
@@ -51,7 +49,7 @@ public:
     template <typename container_t>
     uint64_t write(const address64_t address, const container_t&& data) const
     {
-        // @TODO deal with endianess
+        // @TODO deal with endianness
         const auto value_size = sizeof(typename container_t::value_type);
         return write(address, value_size * std::size(data), data.data());
     }
@@ -69,28 +67,11 @@ public:
     SocModule* parent() const;
     std::vector<SocModule*> children() const;
 
-    SocModule(const QString& name, QObject* parent = nullptr);
+    using SocExplorerObject::SocExplorerObject;
     virtual ~SocModule() { }
-
-    Q_SIGNAL void name_changed(const QString& name);
 
 private:
     address64_t m_base_address { 0UL };
     bool m_is_connected { false };
 };
 }
-
-namespace SocExplorer::Plugins
-{
-class ISocModule : public SocExplorer::SocModule
-{
-    Q_OBJECT
-public:
-    ISocModule(const QString& name, QObject* parent = nullptr)
-            : SocExplorer::SocModule(name, parent)
-    {
-    }
-    virtual ~ISocModule() { }
-};
-}
-Q_DECLARE_INTERFACE(SocExplorer::Plugins::ISocModule, "socexplorer.plugins.SocModule")

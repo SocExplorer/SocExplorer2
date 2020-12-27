@@ -8,6 +8,7 @@
     <primitive-type name="uint64_t"/>
 
     <namespace-type name="SocExplorer">
+        <object-type name="SocExplorerObject"/>
         <object-type name="SocModule"/>
         <object-type name="PySocModule"/>
     </namespace-type>

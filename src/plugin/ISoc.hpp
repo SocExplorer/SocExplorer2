@@ -21,22 +21,20 @@
 ----------------------------------------------------------------------------*/
 #pragma once
 #include <QObject>
+#include <QtPlugin>
+#include "Soc/Soc.hpp"
 
-#include <cstdint>
-
-#include "address.h"
-#include "Soc/SocModule.hpp"
-
-namespace SocExplorer
+namespace SocExplorer::Plugins
 {
-
-class PySocModule : public SocModule
+class ISoc : public SocExplorer::Soc
 {
     Q_OBJECT
 public:
-    PySocModule(const QString& name, QObject* parent = nullptr);
-    virtual ~PySocModule(){}
-private:
+    ISoc(const QString& name, QObject* parent = nullptr)
+            : SocExplorer::Soc(name, parent)
+    {
+    }
+    virtual ~ISoc() { }
 };
-
 }
+Q_DECLARE_INTERFACE(SocExplorer::Plugins::ISoc, "socexplorer.plugins.Soc")

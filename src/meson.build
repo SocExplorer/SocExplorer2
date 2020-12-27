@@ -1,12 +1,17 @@
 socexplorer_src = files(
 [
-  'plugin/SocModule.cpp'
+  'Soc/SocModule.cpp',
+  'Soc/Soc.cpp'
 ]
 )
 
 socexplorer_headers = files(
 [
-  'plugin/SocModule.hpp'
+  'SocExplorerObject.hpp',
+  'plugin/ISocModule.hpp',
+  'plugin/ISoc.hpp',
+  'Soc/SocModule.hpp',
+  'Soc/Soc.hpp'
 ]
 )
 

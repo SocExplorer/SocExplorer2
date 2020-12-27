@@ -19,24 +19,5 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include <QObject>
+#include "Soc.hpp"
 
-#include <cstdint>
-
-#include "address.h"
-#include "Soc/SocModule.hpp"
-
-namespace SocExplorer
-{
-
-class PySocModule : public SocModule
-{
-    Q_OBJECT
-public:
-    PySocModule(const QString& name, QObject* parent = nullptr);
-    virtual ~PySocModule(){}
-private:
-};
-
-}

@@ -21,22 +21,31 @@
 ----------------------------------------------------------------------------*/
 #pragma once
 #include <QObject>
-
-#include <cstdint>
-
-#include "address.h"
-#include "Soc/SocModule.hpp"
+#include <QVariantMap>
+#include "SocExplorerObject.hpp"
 
 namespace SocExplorer
 {
+enum class Endianness
+{
+    unknown,
+    big,
+    little
+};
 
-class PySocModule : public SocModule
+class Soc : public SocExplorerObject
 {
     Q_OBJECT
 public:
-    PySocModule(const QString& name, QObject* parent = nullptr);
-    virtual ~PySocModule(){}
-private:
-};
+    inline Endianness endianness() const { return m_endianness; };
+    QVariant value(const QString& key)const {return m_env[key];}
+    QVariant& value(const QString& key) {return m_env[key];}
 
+    using SocExplorerObject::SocExplorerObject;
+    virtual ~Soc() = default;
+
+private:
+    Endianness m_endianness { Endianness::unknown };
+    QVariantMap m_env;
+};
 }

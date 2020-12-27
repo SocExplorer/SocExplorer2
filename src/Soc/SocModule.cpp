@@ -19,24 +19,44 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include <QObject>
 
-#include <cstdint>
+#include "SocModule.hpp"
+#include <iostream>
 
-#include "address.h"
-#include "Soc/SocModule.hpp"
 
-namespace SocExplorer
+
+uint64_t SocExplorer::SocModule::read(const address64_t address, std::size_t bytes, char* data) const
 {
-
-class PySocModule : public SocModule
-{
-    Q_OBJECT
-public:
-    PySocModule(const QString& name, QObject* parent = nullptr);
-    virtual ~PySocModule(){}
-private:
-};
-
+    auto p = parent();
+    if (p)
+    {
+        return p->read(address, bytes, data);
+    }
+    return 0UL;
 }
+
+uint64_t SocExplorer::SocModule::write(const address64_t address, std::size_t bytes, char* data) const
+{
+    auto p = parent();
+    if (p)
+    {
+        return p->write(address, bytes, data);
+    }
+    return 0UL;
+}
+
+SocExplorer::SocModule* SocExplorer::SocModule::parent() const
+{
+    return qobject_cast<SocModule*>(QObject::parent());
+}
+
+std::vector<SocExplorer::SocModule*> SocExplorer::SocModule::children()const
+{
+    using namespace ranges::views;
+    return QObject::children()
+        | transform([](QObject* qobject) { return qobject_cast<SocModule*>(qobject); })
+        | remove_if([](SocModule* plugin) { return plugin == nullptr; })
+        | ranges::to<std::vector>;
+}
+
+
