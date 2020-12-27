@@ -9,6 +9,9 @@
 
     <namespace-type name="SocExplorer">
         <object-type name="SocExplorerObject"/>
+        <object-type name="Workspace"/>
+        <object-type name="Soc"/>
+        <enum-type name="Endianness"/>
         <object-type name="SocModule"/>
         <object-type name="PySocModule"/>
     </namespace-type>

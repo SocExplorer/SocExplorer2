@@ -7,6 +7,7 @@ socexplorer_src = files(
 
 socexplorer_headers = files(
 [
+  'Workspace.hpp',
   'SocExplorerObject.hpp',
   'plugin/ISocModule.hpp',
   'plugin/ISoc.hpp',
@@ -17,12 +18,11 @@ socexplorer_headers = files(
 
 socexplorer_moc_files = qt5.preprocess(moc_headers : socexplorer_headers)
 
-
-
 socexplorer_lib = library('socexplorer',
                           socexplorer_src,
                           socexplorer_moc_files,
                           dependencies:[qt5core, qt5widgets, qt5gui,opaque_dep,range_dep])
+
 socexplorer_dep = declare_dependency(link_with:socexplorer_lib,
                       dependencies:[qt5core, qt5widgets, qt5gui,opaque_dep,range_dep],
                       include_directories : ['.'])

@@ -20,33 +20,37 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #pragma once
-#include "SocExplorerObject.hpp"
 #include <QObject>
-#include <QVariantMap>
+#include <QWidget>
+
+#include <cstdint>
+#include <vector>
+
+#include <range/v3/view.hpp>
+
+#include "Soc/Soc.hpp"
+#include "Soc/SocModule.hpp"
+#include "SocExplorerObject.hpp"
+#include "address.h"
 
 namespace SocExplorer
 {
-enum class Endianness
-{
-    unknown,
-    big,
-    little
-};
-
-class Soc : public SocExplorerObject
+class Workspace : public SocExplorerObject
 {
     Q_OBJECT
 public:
-    inline Endianness endianness() const { return m_endianness; };
+    inline void set_root_module(SocModule* module) { m_root_module = module; }
+    inline SocModule* root_module() { return m_root_module; }
+    inline Soc* soc() { return m_soc; }
 
-    QVariant value(const QString& key) const { return m_env[key]; }
-    void set_value(const QString& key, QVariant value) { m_env[key] = std::move(value); }
-
-    using SocExplorerObject::SocExplorerObject;
-    virtual ~Soc() = default;
+    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
+            : SocExplorerObject(name, parent), m_soc { soc }
+    {
+    }
+    ~Workspace() = default;
 
 private:
-    Endianness m_endianness { Endianness::unknown };
-    QVariantMap m_env;
+    Soc* m_soc;
+    SocModule* m_root_module { nullptr };
 };
 }

@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
-from ddt import ddt, data, unpack
 from SocExplorerBindings import SocExplorer
 import struct
 
 
-@ddt
-class APlugin(unittest.TestCase):
+class APySocModule(unittest.TestCase):
     def test_can_be_constructed(self):
         p = SocExplorer.PySocModule("")
         self.assertIsNotNone(p)
@@ -22,19 +20,8 @@ class APlugin(unittest.TestCase):
         self.assertEqual(p.vid, max_int64)
         self.assertEqual(p.pid, max_int64)
 
-    @data("", "SomeRandomName", "1otherN@me")
-    def test_gets_its_name_from_ctor(self, name):
-        p = SocExplorer.PySocModule(name)
-        self.assertEqual(p.name(), name)
 
-    @data("", "SomeRandomName", "1otherN@me")
-    def test_can_be_renamed(self, name):
-        p = SocExplorer.PySocModule("")
-        p.set_name(name)
-        self.assertEqual(p.name(), name)
-
-
-class APluginHierarchy(unittest.TestCase):
+class APySocModuleHierarchy(unittest.TestCase):
     def setUp(self):
         self.root = SocExplorer.PySocModule("root")
         SocExplorer.PySocModule("child1", self.root)
