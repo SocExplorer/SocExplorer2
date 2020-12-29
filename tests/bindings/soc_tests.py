@@ -2,7 +2,7 @@
 
 import unittest
 from ddt import ddt, data, unpack
-from SocExplorerBindings import SocExplorer
+from SocExplorerBindings import SocExplorer, Endianness
 import struct
 
 
@@ -14,7 +14,7 @@ class ASoc(unittest.TestCase):
 
     def test_default_endianness_is_unknown(self):
         p = SocExplorer.Soc("")
-        self.assertEquals(p.endianness(), SocExplorer.Endianness.unknown)
+        self.assertEquals(p.endianness(), Endianness.Endianness.unknown)
 
     def test_can_set_and_read_variables(self):
         p = SocExplorer.Soc("")

@@ -12,3 +12,7 @@ test('soc_tests', python3, args:[scrip_path.format('soc_tests.py'), '--verbose']
 test('socexplorerobject_tests', python3, args:[scrip_path.format('socexplorerobject_tests.py'), '--verbose'],
     env:['PYTHONPATH='+bindings_path]
 )
+
+test('workspace_tests', python3, args:[scrip_path.format('workspace_tests.py'), '--verbose'],
+    env:['PYTHONPATH='+bindings_path]
+)

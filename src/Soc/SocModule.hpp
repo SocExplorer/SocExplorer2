@@ -28,8 +28,9 @@
 
 #include <range/v3/view.hpp>
 
-#include "address.h"
+#include "Soc.hpp"
 #include "SocExplorerObject.hpp"
+#include "address.h"
 
 namespace SocExplorer
 {
@@ -50,6 +51,7 @@ public:
     uint64_t write(const address64_t address, const container_t&& data) const
     {
         // @TODO deal with endianness
+
         const auto value_size = sizeof(typename container_t::value_type);
         return write(address, value_size * std::size(data), data.data());
     }
@@ -67,10 +69,12 @@ public:
     SocModule* parent() const;
     std::vector<SocModule*> children() const;
 
-    using SocExplorerObject::SocExplorerObject;
+    SocModule(const QString& name, Soc* soc, QObject* parent = nullptr);
+
     virtual ~SocModule() { }
 
 private:
+    Soc* m_soc;
     address64_t m_base_address { 0UL };
     bool m_is_connected { false };
 };

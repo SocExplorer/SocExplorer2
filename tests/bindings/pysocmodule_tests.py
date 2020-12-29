@@ -6,16 +6,19 @@ import struct
 
 
 class APySocModule(unittest.TestCase):
+    def setUp(self):
+        self.soc = SocExplorer.Soc("default")
+
     def test_can_be_constructed(self):
-        p = SocExplorer.PySocModule("")
+        p = SocExplorer.PySocModule("", self.soc)
         self.assertIsNotNone(p)
 
     def test_returns_no_widget_by_default(self):
-        p = SocExplorer.PySocModule("")
+        p = SocExplorer.PySocModule("", self.soc)
         self.assertIsNone(p.ui())
 
     def test_has_max_int_as_default_vid_pid(self):
-        p = SocExplorer.PySocModule("")
+        p = SocExplorer.PySocModule("", self.soc)
         max_int64 = 2 ** 64 -1
         self.assertEqual(p.vid, max_int64)
         self.assertEqual(p.pid, max_int64)
@@ -23,9 +26,10 @@ class APySocModule(unittest.TestCase):
 
 class APySocModuleHierarchy(unittest.TestCase):
     def setUp(self):
-        self.root = SocExplorer.PySocModule("root")
-        SocExplorer.PySocModule("child1", self.root)
-        SocExplorer.PySocModule("child2", self.root)
+        self.soc = SocExplorer.Soc("default")
+        self.root = SocExplorer.PySocModule("root", self.soc)
+        SocExplorer.PySocModule("child1", self.soc, self.root)
+        SocExplorer.PySocModule("child2", self.soc, self.root)
 
     def test_parent_plugin_list_children(self):
         children = self.root.children()

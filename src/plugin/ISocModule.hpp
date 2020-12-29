@@ -30,8 +30,8 @@ class ISocModule : public SocExplorer::SocModule
 {
     Q_OBJECT
 public:
-    ISocModule(const QString& name, QObject* parent = nullptr)
-            : SocExplorer::SocModule(name, parent)
+    ISocModule(const QString& name, Soc* soc, QObject* parent = nullptr)
+            : SocExplorer::SocModule(name,soc, parent)
     {
     }
     virtual ~ISocModule() { }

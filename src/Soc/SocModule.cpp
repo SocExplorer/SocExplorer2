@@ -59,4 +59,9 @@ std::vector<SocExplorer::SocModule*> SocExplorer::SocModule::children()const
         | ranges::to<std::vector>;
 }
 
+SocExplorer::SocModule::SocModule(const QString &name, SocExplorer::Soc *soc, QObject *parent)
+    : SocExplorerObject(name, parent), m_soc { soc }
+{
+}
+
 

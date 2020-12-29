@@ -23,21 +23,16 @@
 #include "SocExplorerObject.hpp"
 #include <QObject>
 #include <QVariantMap>
+#include <endianness.hpp>
 
 namespace SocExplorer
 {
-enum class Endianness
-{
-    unknown,
-    big,
-    little
-};
 
 class Soc : public SocExplorerObject
 {
     Q_OBJECT
 public:
-    inline Endianness endianness() const { return m_endianness; };
+    inline Endianness::Endianness endianness() const { return m_endianness; };
 
     QVariant value(const QString& key) const { return m_env[key]; }
     void set_value(const QString& key, QVariant value) { m_env[key] = std::move(value); }
@@ -46,7 +41,7 @@ public:
     virtual ~Soc() = default;
 
 private:
-    Endianness m_endianness { Endianness::unknown };
+    Endianness::Endianness m_endianness { Endianness::Endianness::unknown };
     QVariantMap m_env;
 };
 }

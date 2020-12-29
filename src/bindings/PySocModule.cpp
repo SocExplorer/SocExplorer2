@@ -22,4 +22,5 @@
 #include "PySocModule.hpp"
 #include <QString>
 
-SocExplorer::PySocModule::PySocModule(const QString& name, QObject* parent) : SocModule(name, parent) { }
+SocExplorer::PySocModule::PySocModule(const QString& name, Soc* soc, QObject* parent)
+    : SocModule(name,soc, parent) { }

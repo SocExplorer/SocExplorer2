@@ -19,6 +19,9 @@ socexplorer_bindings_incs = shiboken2_build_flags + [
     '-I'+meson.current_source_dir()+'/../',
     '-I'+meson.current_source_dir()+'/../../'+opaque_inc_dir,
     '-I'+meson.current_source_dir()+'/../../subprojects/range-v3-0.10.0/include',
+    '-I'+meson.current_source_dir()+'/../../subprojects/hedley-11',
+    '-I'+meson.current_source_dir()+'/../../subprojects/cpp_utils/include',
+    '-I'+meson.build_root()+'/subprojects/cpp_utils',
     '-I'+python3.get_path('include'),
     '-I'+qt_headers_path
     ]

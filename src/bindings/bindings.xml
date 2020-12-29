@@ -6,13 +6,23 @@
 
     <primitive-type name="bool"/>
     <primitive-type name="uint64_t"/>
-
+    <namespace-type name="Endianness">
+        <enum-type name="Endianness"/>
+    </namespace-type>
     <namespace-type name="SocExplorer">
         <object-type name="SocExplorerObject"/>
         <object-type name="Workspace"/>
         <object-type name="Soc"/>
-        <enum-type name="Endianness"/>
-        <object-type name="SocModule"/>
+        <object-type name="SocModule">
+            <modify-function signature="parent()const">
+                <modify-argument index="this">
+                    <parent index="return" action="add"/>
+                </modify-argument>
+                <modify-argument index="return">
+                    <define-ownership class="target" owner="default"/>
+                </modify-argument>
+            </modify-function>
+        </object-type>
         <object-type name="PySocModule"/>
     </namespace-type>
 </typesystem>
