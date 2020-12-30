@@ -5,4 +5,5 @@
 #include "../Workspace.hpp"
 #include "../Soc/SocModule.hpp"
 #include "../Soc/Soc.hpp"
+#include "../Factory/SocExplorerFactory.hpp"
 #include "PySocModule.hpp"

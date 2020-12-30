@@ -29,7 +29,7 @@
 
 namespace SocExplorer
 {
-
+class Soc;
 class PySocModule : public SocModule
 {
     Q_OBJECT

@@ -10,6 +10,23 @@
         <enum-type name="Endianness"/>
     </namespace-type>
     <namespace-type name="SocExplorer">
+        <enum-type name="BusSize"/>
+        <object-type name="SocExplorerFactory">
+            <modify-function signature="register_soc_ctor(const QString&amp;, SocExplorer::SocCtor_t*)">
+                <modify-argument index="2">
+                    <define-ownership class="target" owner="c++" />
+                </modify-argument>
+            </modify-function>
+        </object-type>
+        <object-type name="SocCtor_t">
+            <modify-function signature="operator()(const QString&amp;, QObject*) const">
+                <modify-argument index="return">
+                    <parent index="2" action="add"/>
+                    <define-ownership class="native" owner="c++"/>
+                    <define-ownership class="target" owner="default"/>
+                </modify-argument>
+            </modify-function>
+        </object-type>
         <object-type name="SocExplorerObject"/>
         <object-type name="Workspace"/>
         <object-type name="Soc"/>

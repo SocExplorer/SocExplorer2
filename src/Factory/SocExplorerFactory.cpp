@@ -19,43 +19,9 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include "SocExplorerObject.hpp"
-#include <QObject>
-#include <QVariantMap>
-#include <endianness.hpp>
-
-namespace SocExplorer
+#include "SocExplorerFactory.hpp"
+SocExplorer::SocExplorerFactory::SocExplorerFactory(QObject *parent)
+    :SocExplorerObject("SocExplorerFactory", parent)
 {
 
-enum class BusSize
-{
-    sUnknown = 0,
-    s8 = 1,
-    s16 = 2,
-    s32 = 4,
-    s64 = 8
-};
-
-class Soc : public SocExplorerObject
-{
-    Q_OBJECT
-public:
-    inline Endianness::Endianness endianness() const { return m_endianness; };
-
-    inline BusSize data_width() { return m_data_width; }
-    inline BusSize address_width() { return m_address_width; }
-
-    QVariant value(const QString& key) const { return m_env[key]; }
-    void set_value(const QString& key, QVariant value) { m_env[key] = std::move(value); }
-
-    Soc(const QString& name, QObject* parent = nullptr) : SocExplorerObject(name, parent) { }
-    virtual ~Soc() = default;
-
-private:
-    Endianness::Endianness m_endianness { Endianness::Endianness::unknown };
-    QVariantMap m_env;
-    BusSize m_data_width = BusSize::sUnknown;
-    BusSize m_address_width = BusSize::sUnknown;
-};
 }

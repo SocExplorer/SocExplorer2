@@ -1,18 +1,17 @@
-bindings_path=meson.project_build_root()+'/src/bindings'
-scrip_path = meson.current_source_dir()+'/@0@'
+test_scripts = [
+    'pysocmodule_tests.py',
+    'soc_tests.py',
+    'socexplorerobject_tests.py',
+    'workspace_tests.py',
+    'factory_tests.py'
+]
 
-test('pysocmodule_tests', python3, args:[scrip_path.format('pysocmodule_tests.py'), '--verbose'],
-    env:['PYTHONPATH='+bindings_path]
-)
+foreach test:test_scripts
+    test(test.split('.')[0], python3,
+        args:[meson.current_source_dir()+'/'+test, '--verbose'],
+        env:['PYTHONPATH='+meson.project_build_root()+'/src/bindings']
+    )
+endforeach
 
-test('soc_tests', python3, args:[scrip_path.format('soc_tests.py'), '--verbose'],
-    env:['PYTHONPATH='+bindings_path]
-)
-
-test('socexplorerobject_tests', python3, args:[scrip_path.format('socexplorerobject_tests.py'), '--verbose'],
-    env:['PYTHONPATH='+bindings_path]
-)
-
-test('workspace_tests', python3, args:[scrip_path.format('workspace_tests.py'), '--verbose'],
-    env:['PYTHONPATH='+bindings_path]
-)
+library('tests_fake',[],
+        extra_files:test_scripts)

@@ -31,6 +31,7 @@
 #include "Soc.hpp"
 #include "SocExplorerObject.hpp"
 #include "address.h"
+#include "endianness.hpp"
 
 namespace SocExplorer
 {
@@ -50,9 +51,12 @@ public:
     template <typename container_t>
     uint64_t write(const address64_t address, const container_t&& data) const
     {
-        // @TODO deal with endianness
-
-        const auto value_size = sizeof(typename container_t::value_type);
+        using value_type = typename container_t::value_type;
+        if (m_soc->endianness() != Endianness::host_endianness_v())
+        {
+            Endianness::byte_swap(reinterpret_cast<value_type*>(data.data()), std::size(data));
+        }
+        const auto value_size = sizeof(value_type);
         return write(address, value_size * std::size(data), data.data());
     }
 
