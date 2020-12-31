@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from ddt import ddt, data, unpack
 from SocExplorerBindings import SocExplorer, Endianness
-import struct
 
 
-@ddt
 class ASoc(unittest.TestCase):
     def test_can_be_constructed(self):
         p = SocExplorer.Soc("")

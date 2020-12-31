@@ -35,7 +35,7 @@
 
 namespace SocExplorer
 {
-class Workspace : public SocExplorerObject
+class Workspace : public SEObject
 {
     Q_OBJECT
 public:
@@ -44,7 +44,7 @@ public:
     inline Soc* soc() { return m_soc; }
 
     Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SocExplorerObject(name, parent), m_soc { soc }
+            : SEObject(name, parent), m_soc { soc }
     {
     }
     ~Workspace() = default;

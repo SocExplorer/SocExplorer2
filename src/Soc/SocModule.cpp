@@ -60,7 +60,7 @@ std::vector<SocExplorer::SocModule*> SocExplorer::SocModule::children()const
 }
 
 SocExplorer::SocModule::SocModule(const QString &name, SocExplorer::Soc *soc, QObject *parent)
-    : SocExplorerObject(name, parent), m_soc { soc }
+    : SEObject(name, parent), m_soc { soc }
 {
 }
 

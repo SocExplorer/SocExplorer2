@@ -35,7 +35,7 @@
 
 namespace SocExplorer
 {
-class SocModule : public SocExplorerObject
+class SocModule : public SEObject
 {
     Q_OBJECT
 public:

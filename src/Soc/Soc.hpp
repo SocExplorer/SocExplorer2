@@ -37,7 +37,7 @@ enum class BusSize
     s64 = 8
 };
 
-class Soc : public SocExplorerObject
+class Soc : public SEObject
 {
     Q_OBJECT
 public:
@@ -49,7 +49,7 @@ public:
     QVariant value(const QString& key) const { return m_env[key]; }
     void set_value(const QString& key, QVariant value) { m_env[key] = std::move(value); }
 
-    Soc(const QString& name, QObject* parent = nullptr) : SocExplorerObject(name, parent) { }
+    Soc(const QString& name, QObject* parent = nullptr) : SEObject(name, parent) { }
     virtual ~Soc() = default;
 
 private:

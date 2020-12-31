@@ -2,7 +2,6 @@
 
 import unittest
 from SocExplorerBindings import SocExplorer
-import struct
 
 
 class APySocModule(unittest.TestCase):

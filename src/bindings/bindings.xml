@@ -12,13 +12,13 @@
     <namespace-type name="SocExplorer">
         <enum-type name="BusSize"/>
         <object-type name="SocExplorerFactory">
-            <modify-function signature="register_soc_ctor(const QString&amp;, SocExplorer::SocCtor_t*)">
+            <modify-function signature="register_ctor(const QString&amp;, SocExplorer::SEObjectCtor_t*)">
                 <modify-argument index="2">
                     <define-ownership class="target" owner="c++" />
                 </modify-argument>
             </modify-function>
         </object-type>
-        <object-type name="SocCtor_t">
+        <object-type name="SEObjectCtor_t">
             <modify-function signature="operator()(const QString&amp;, QObject*) const">
                 <modify-argument index="return">
                     <parent index="2" action="add"/>
@@ -26,8 +26,15 @@
                     <define-ownership class="target" owner="default"/>
                 </modify-argument>
             </modify-function>
+            <modify-function signature="operator()(const QString&amp;,SocExplorer::SEObject*, QObject*) const">
+                <modify-argument index="return">
+                    <parent index="3" action="add"/>
+                    <define-ownership class="native" owner="c++"/>
+                    <define-ownership class="target" owner="default"/>
+                </modify-argument>
+            </modify-function>
         </object-type>
-        <object-type name="SocExplorerObject"/>
+        <object-type name="SEObject"/>
         <object-type name="Workspace"/>
         <object-type name="Soc"/>
         <object-type name="SocModule">

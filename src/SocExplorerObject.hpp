@@ -26,12 +26,12 @@
 namespace SocExplorer
 {
 
-class SocExplorerObject : public QObject
+class SEObject : public QObject
 {
     Q_OBJECT
 public:
-    SocExplorerObject(QObject* parent = nullptr) : QObject(parent) { }
-    SocExplorerObject(const QString& name, QObject* parent = nullptr) : QObject(parent)
+    SEObject(QObject* parent = nullptr) : QObject(parent) { }
+    SEObject(const QString& name, QObject* parent = nullptr) : QObject(parent)
     {
         set_name(name);
     }

@@ -21,7 +21,7 @@
 ----------------------------------------------------------------------------*/
 #include "SocExplorerFactory.hpp"
 SocExplorer::SocExplorerFactory::SocExplorerFactory(QObject *parent)
-    :SocExplorerObject("SocExplorerFactory", parent)
+    :SEObject("SocExplorerFactory", parent)
 {
 
 }
