@@ -15,8 +15,8 @@ class MyModuleFac(SocExplorer.SEObjectCtor_t):
     def __init__(self):
         super(MyModuleFac, self).__init__()
 
-    def __call__(self,name,soc,parent=None):
-        return SocExplorer.PySocModule(name,soc,parent)
+    def __call__(self,name,parent=None):
+        return SocExplorer.PySocModule(name,parent)
 
 
 class AFactory(unittest.TestCase):

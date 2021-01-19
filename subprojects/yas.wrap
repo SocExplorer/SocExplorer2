@@ -1,0 +1,6 @@
+[wrap-git]
+url = https://github.com/SocExplorer/yas
+revision = meson
+
+[provide]
+yas = yas_dep

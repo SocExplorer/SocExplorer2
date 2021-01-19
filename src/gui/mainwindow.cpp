@@ -19,39 +19,19 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include <QObject>
-#include <QWidget>
-
-#include <cstdint>
-#include <vector>
-
-#include <range/v3/view.hpp>
-
-#include "Soc/Soc.hpp"
-#include "Soc/SocModule.hpp"
-#include "SocExplorerObject.hpp"
-#include "address.h"
+#include "mainwindow.hpp"
+#include "ui_mainwindow.h"
 
 namespace SocExplorer
 {
-class Workspace : public SEObject
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-    Q_OBJECT
-public:
-    inline void set_root_module(SocModule* module) { m_root_module = module; }
-    inline SocModule* root_module() { return m_root_module; }
-    inline Soc* soc() { return m_soc; }
+    ui->setupUi(this);
+}
 
-    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SEObject(name, parent), m_soc { soc }
-    {
-        soc->setParent(this);
-    }
-    ~Workspace() = default;
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
 
-private:
-    Soc* m_soc;
-    SocModule* m_root_module { nullptr };
-};
 }

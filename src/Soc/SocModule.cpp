@@ -21,11 +21,28 @@
 ----------------------------------------------------------------------------*/
 
 #include "SocModule.hpp"
+#include "Workspace.hpp"
 #include <iostream>
+#include <spdlog/spdlog.h>
 
+SocExplorer::Workspace* workspace(SocExplorer::SocModule* module)
+{
+    if (module)
+    {
+        auto parent = module->parent();
+        auto w = qobject_cast<SocExplorer::Workspace*>(parent);
+        while (parent && !w)
+        {
+            parent = parent->parent();
+            w = qobject_cast<SocExplorer::Workspace*>(parent);
+        }
+        return w;
+    }
+    return nullptr;
+}
 
-
-uint64_t SocExplorer::SocModule::read(const address64_t address, std::size_t bytes, char* data) const
+uint64_t SocExplorer::SocModule::read(
+    const address64_t address, std::size_t bytes, char* data) const
 {
     auto p = parent();
     if (p)
@@ -35,7 +52,8 @@ uint64_t SocExplorer::SocModule::read(const address64_t address, std::size_t byt
     return 0UL;
 }
 
-uint64_t SocExplorer::SocModule::write(const address64_t address, std::size_t bytes, char* data) const
+uint64_t SocExplorer::SocModule::write(
+    const address64_t address, std::size_t bytes, char* data) const
 {
     auto p = parent();
     if (p)
@@ -50,18 +68,21 @@ SocExplorer::SocModule* SocExplorer::SocModule::parent() const
     return qobject_cast<SocModule*>(QObject::parent());
 }
 
-std::vector<SocExplorer::SocModule*> SocExplorer::SocModule::children()const
+std::vector<SocExplorer::SocModule*> SocExplorer::SocModule::children() const
 {
     using namespace ranges::views;
     return QObject::children()
         | transform([](QObject* qobject) { return qobject_cast<SocModule*>(qobject); })
-        | remove_if([](SocModule* plugin) { return plugin == nullptr; })
-        | ranges::to<std::vector>;
+        | remove_if([](SocModule* plugin) { return plugin == nullptr; }) | ranges::to<std::vector>;
 }
 
-SocExplorer::SocModule::SocModule(const QString &name, SocExplorer::Soc *soc, QObject *parent)
-    : SEObject(name, parent), m_soc { soc }
+SocExplorer::SocModule::SocModule(const QString& name, QObject* parent) : SEObject(name, parent)
 {
+    if (auto w = workspace(this); w)
+        m_soc = w->soc();
+    else
+    {
+        spdlog::critical(
+            "{}, SocModule created without Workspace as top parent", name.toStdString());
+    }
 }
-
-

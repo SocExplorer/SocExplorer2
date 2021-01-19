@@ -20,38 +20,15 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #pragma once
-#include <QObject>
-#include <QWidget>
-
-#include <cstdint>
-#include <vector>
-
-#include <range/v3/view.hpp>
-
-#include "Soc/Soc.hpp"
-#include "Soc/SocModule.hpp"
 #include "SocExplorerObject.hpp"
-#include "address.h"
+#include <QObject>
+#include <QtPlugin>
 
-namespace SocExplorer
-{
-class Workspace : public SEObject
+class RmapPlugin : public SocExplorer::SEObject
 {
     Q_OBJECT
 public:
-    inline void set_root_module(SocModule* module) { m_root_module = module; }
-    inline SocModule* root_module() { return m_root_module; }
-    inline Soc* soc() { return m_soc; }
-
-    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SEObject(name, parent), m_soc { soc }
+    RmapPlugin(const QString& name, QObject* parent = nullptr) : SocExplorer::SEObject(name, parent)
     {
-        soc->setParent(this);
     }
-    ~Workspace() = default;
-
-private:
-    Soc* m_soc;
-    SocModule* m_root_module { nullptr };
 };
-}

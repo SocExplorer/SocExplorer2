@@ -20,21 +20,23 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #pragma once
-#include <QObject>
-#include <QtPlugin>
-#include "Soc/Soc.hpp"
+#include <QMainWindow>
 
-namespace SocExplorer::Plugins
+namespace Ui
 {
-class ISoc : public SocExplorer::Soc
+class MainWindow;
+}
+namespace SocExplorer
+{
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
-    ISoc(const QString& name, QObject* parent = nullptr)
-            : SocExplorer::Soc(name, parent)
-    {
-    }
-    virtual ~ISoc() { }
+    explicit MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
+
+private:
+    Ui::MainWindow* ui;
 };
 }
-Q_DECLARE_INTERFACE(SocExplorer::Plugins::ISoc, "socexplorer.plugins.Soc")

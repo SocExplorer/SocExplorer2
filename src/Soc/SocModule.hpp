@@ -54,7 +54,8 @@ public:
         using value_type = typename container_t::value_type;
         if (m_soc->endianness() != Endianness::host_endianness_v())
         {
-            Endianness::byte_swap(reinterpret_cast<value_type*>(data.data()), std::size(data));
+            Endianness::details::byte_swap(
+                reinterpret_cast<value_type*>(data.data()), std::size(data));
         }
         const auto value_size = sizeof(value_type);
         return write(address, value_size * std::size(data), data.data());
@@ -73,12 +74,12 @@ public:
     SocModule* parent() const;
     std::vector<SocModule*> children() const;
 
-    SocModule(const QString& name, Soc* soc, QObject* parent = nullptr);
+    SocModule(const QString& name, QObject* parent = nullptr);
 
     virtual ~SocModule() { }
 
 private:
-    Soc* m_soc;
+    Soc* m_soc { nullptr };
     address64_t m_base_address { 0UL };
     bool m_is_connected { false };
 };

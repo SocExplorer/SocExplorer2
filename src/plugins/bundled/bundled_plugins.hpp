@@ -20,38 +20,17 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #pragma once
+#include "../../plugin/IFactory.hpp"
+#include "Factory/SocExplorerFactory.hpp"
 #include <QObject>
-#include <QWidget>
+#include <QtPlugin>
 
-#include <cstdint>
-#include <vector>
-
-#include <range/v3/view.hpp>
-
-#include "Soc/Soc.hpp"
-#include "Soc/SocModule.hpp"
-#include "SocExplorerObject.hpp"
-#include "address.h"
-
-namespace SocExplorer
-{
-class Workspace : public SEObject
+class BundledPlugins : public SocExplorer::Plugins::IFactory
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "socexplorer.plugins.IFactory" FILE "bundled_plugins.json")
+    Q_INTERFACES(SocExplorer::Plugins::IFactory)
 public:
-    inline void set_root_module(SocModule* module) { m_root_module = module; }
-    inline SocModule* root_module() { return m_root_module; }
-    inline Soc* soc() { return m_soc; }
-
-    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SEObject(name, parent), m_soc { soc }
-    {
-        soc->setParent(this);
-    }
-    ~Workspace() = default;
-
-private:
-    Soc* m_soc;
-    SocModule* m_root_module { nullptr };
+    BundledPlugins(QObject* parent = nullptr) : IFactory("RmapPlugin", parent) { }
+    virtual std::vector<std::pair<QString, SocExplorer::SEObjectCtor_t*>> factories() final;
 };
-}

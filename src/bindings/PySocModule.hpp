@@ -34,7 +34,7 @@ class PySocModule : public SocModule
 {
     Q_OBJECT
 public:
-    PySocModule(const QString& name, Soc* soc, QObject* parent = nullptr);
+    PySocModule(const QString& name, QObject* parent = nullptr);
     virtual ~PySocModule(){}
 private:
 };

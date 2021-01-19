@@ -8,7 +8,7 @@ from PySide2.QtWidgets import QApplication, QMainWindow, QDockWidget
 from PySide2.QtCore import QSize, Qt
 from PySide2 import QtGui
 sys.path.append(os.getcwd())
-from SciQLopBindings import SqpApplication, MainWindow, init_resources, load_plugins, SqpApplication_ctor
+from SocExplorerBindings import SocExplorerApplication, SocExplorer, SocExplorerApplication_ctor
 from qtconsole.rich_ipython_widget import RichJupyterWidget
 from qtconsole.inprocess import QtInProcessKernelManager
 
@@ -92,16 +92,15 @@ def print_process_id():
 
 
 if __name__ == "__main__":
-    init_resources()
-    app = SqpApplication_ctor(sys.argv)
+    #init_resources()
+    app = SocExplorerApplication_ctor(sys.argv)
     QtGui.qApp = app
-    load_plugins(app)
-    main_window = MainWindow()
+    main_window = SocExplorer.MainWindow()
     term = IPythonDockWidget(available_vars={"app":app, "main_window":main_window}, custom_banner="SciQLop IPython Console ")
     main_window.addDockWidget(Qt.BottomDockWidgetArea, term)
     main_window.show()
-    for file in os.listdir('plugins'):
-        if os.path.isfile(f"plugins/{file}"):
-            exec(open(f"plugins/{file}").read())
+    #for file in os.listdir('plugins'):
+    #    if os.path.isfile(f"plugins/{file}"):
+    #        exec(open(f"plugins/{file}").read())
     sys.exit(app.exec_())
 

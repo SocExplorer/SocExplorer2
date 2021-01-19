@@ -1,0 +1,8 @@
+[wrap-git]
+url = https://github.com/SocExplorer/SpaceWireZMQ
+revision = main
+clone-recursive = true
+
+[provide]
+spacewirezmq = SpaceWireZMQ_dep
+

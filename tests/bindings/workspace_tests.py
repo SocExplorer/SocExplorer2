@@ -18,7 +18,7 @@ class AWorkspace(unittest.TestCase):
     def test_allows_to_set_its_root_Module(self):
         s = SocExplorer.Soc("Leon3")
         w = SocExplorer.Workspace(s,"Workspace")
-        m = SocExplorer.PySocModule("Module", s)
+        m = SocExplorer.PySocModule("Module", w)
         w.set_root_module(m)
         self.assertIs(m, w.root_module())
 

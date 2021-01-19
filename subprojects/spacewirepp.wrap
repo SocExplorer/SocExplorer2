@@ -1,0 +1,6 @@
+[wrap-git]
+url = https://github.com/SocExplorer/SpaceWirePP
+revision = main
+
+[provide]
+spacewirepp = SpaceWirePP_dep

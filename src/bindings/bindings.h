@@ -6,4 +6,6 @@
 #include "../Soc/SocModule.hpp"
 #include "../Soc/Soc.hpp"
 #include "../Factory/SocExplorerFactory.hpp"
+#include "SocExplorerApp.hpp"
+#include "../gui/mainwindow.hpp"
 #include "PySocModule.hpp"

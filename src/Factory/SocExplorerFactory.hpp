@@ -35,7 +35,6 @@ class SEObjectCtor_t
 {
 public:
     virtual SEObject* operator()(const QString& name, QObject* parent) const;
-    virtual SEObject* operator()(const QString& name, SEObject* soc_obj, QObject* parent) const;
 
     SEObjectCtor_t() { }
     virtual ~SEObjectCtor_t() {};
@@ -58,8 +57,6 @@ namespace details
         inline SEObject* new_object(
             const QString& factory_name, const QString& name, QObject* parent = nullptr);
 
-        inline SEObject* new_object(const QString& factory_name, const QString& name,
-            SEObject* soc_obj, QObject* parent = nullptr);
 
     private:
         QMap<QString, SEObjectCtor_t*> m_ctors;
@@ -79,9 +76,6 @@ public:
     inline SEObject* new_object(
         const QString& factory_name, const QString& name, QObject* parent = nullptr);
 
-    inline SEObject* new_object(const QString& factory_name, const QString& name, SEObject* soc_obj,
-        QObject* parent = nullptr);
-
     SocExplorerFactory(QObject* parent = nullptr);
     ~SocExplorerFactory() { }
 };
@@ -98,14 +92,6 @@ inline SEObject* SEObjectCtor_t::operator()(const QString& name, QObject* parent
     Q_UNUSED(parent);
     return nullptr;
 }
-inline SEObject* SEObjectCtor_t::operator()(
-    const QString& name, SEObject* soc_obj, QObject* parent) const
-{
-    Q_UNUSED(name);
-    Q_UNUSED(soc_obj);
-    Q_UNUSED(parent);
-    return nullptr;
-};
 
 inline void SocExplorerFactory::register_ctor(const QString& name, SEObjectCtor_t* ctor)
 {
@@ -116,12 +102,6 @@ inline SEObject* SocExplorerFactory::new_object(
     const QString& factory_name, const QString& name, QObject* parent)
 {
     return _SX_FORWARD(new_object, factory_name, name, parent);
-}
-
-inline SEObject* SocExplorerFactory::new_object(
-    const QString& factory_name, const QString& name, SEObject* soc_obj, QObject* parent)
-{
-    return _SX_FORWARD(new_object, factory_name, name, soc_obj, parent);
 }
 
 namespace details
@@ -144,12 +124,6 @@ namespace details
         return (*m_ctors.value(factory_name, &default_ctor))(name, parent);
     }
 
-    inline SEObject* FactorySingleton::new_object(
-        const QString& factory_name, const QString& name, SEObject* soc_obj, QObject* parent)
-    {
-        static SEObjectCtor_t default_ctor;
-        return (*m_ctors.value(factory_name, &default_ctor))(name, soc_obj, parent);
-    }
 }
 
 }

@@ -4,6 +4,15 @@ subprojects/Catch2-*
 subprojects/cpp_utils
 subprojects/QCustomPlot
 subprojects/packagecache/*
+subprojects/channels/*
+subprojects/cppdict/*
+subprojects/hedley-*
+subprojects/nlohmann_json-*
+subprojects/QtGuiTestUtils/*
+subprojects/spacewirepp/*
+subprojects/spacewirezmq/*
+subprojects/spdlog-*
+subprojects/yas/*
 *.srctrl*
 *.kdev4
 .vscode

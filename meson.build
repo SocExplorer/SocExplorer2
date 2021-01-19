@@ -17,6 +17,8 @@ catch2_dep = dependency('catch2', main : true, fallback : ['catch2', 'catch2_dep
 range_dep = dependency('range-v3', fallback : ['range-v3', 'range_dep'])
 cpp_utils_dep = dependency('cpp_utils', fallback : ['cpp_utils', 'cpp_utils_dep'])
 QtGuiTestUtils_dep = dependency('QtGuiTestUtils', fallback : ['QtGuiTestUtils', 'QtGuiTestUtils_dep'])
+SpaceWireZMQ_dep = dependency('spacewirezmq')
+spdlog_dep = dependency('spdlog')
 
 subdir('src')
 subdir('tests')

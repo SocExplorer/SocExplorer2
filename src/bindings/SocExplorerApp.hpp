@@ -20,38 +20,40 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #pragma once
+#include <QApplication>
 #include <QObject>
-#include <QWidget>
+#include <QtPlugin>
+#include <bundled_plugins.hpp>
 
-#include <cstdint>
-#include <vector>
+#if defined(socExplorerApp)
+#undef socExplorerApp
+#endif
+#define socExplorerApp (static_cast<SqpApplication*>(QCoreApplication::instance()))
 
-#include <range/v3/view.hpp>
-
-#include "Soc/Soc.hpp"
-#include "Soc/SocModule.hpp"
-#include "SocExplorerObject.hpp"
-#include "address.h"
-
-namespace SocExplorer
-{
-class Workspace : public SEObject
+class SocExplorerApplication : public QApplication
 {
     Q_OBJECT
 public:
-    inline void set_root_module(SocModule* module) { m_root_module = module; }
-    inline SocModule* root_module() { return m_root_module; }
-    inline Soc* soc() { return m_soc; }
-
-    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SEObject(name, parent), m_soc { soc }
+    explicit SocExplorerApplication(int& argc, char** argv) : QApplication(argc, argv)
     {
-        soc->setParent(this);
-    }
-    ~Workspace() = default;
+#ifdef QT_STATICPLUGIN
+
+        Q_INIT_RESOURCE(python_providers);
+#endif
+        Q_IMPORT_PLUGIN(BundledPlugins);
+        setOrganizationName("LPP");
+        setOrganizationDomain("lpp.fr");
+        setApplicationName("SocExplorer");
+        QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    };
+    ~SocExplorerApplication() override {};
 
 private:
-    Soc* m_soc;
-    SocModule* m_root_module { nullptr };
 };
+
+inline SocExplorerApplication* SocExplorerApplication_ctor()
+{
+    static int argc;
+    static char** argv;
+    return new SocExplorerApplication(argc, argv);
 }

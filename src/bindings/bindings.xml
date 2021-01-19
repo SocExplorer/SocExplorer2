@@ -9,6 +9,19 @@
     <namespace-type name="Endianness">
         <enum-type name="Endianness"/>
     </namespace-type>
+    <object-type name="SocExplorerApplication">
+        <modify-function signature="SocExplorerApplication(int&amp;,char**)" access="private"/>
+    </object-type>
+    <function signature="SocExplorerApplication_ctor()" return-type="SocExplorerApplication*"/>
+    <add-function signature="SocExplorerApplication_ctor(PySequence)" return-type="SocExplorerApplication*">
+        <inject-code class="target">
+            static int argc;
+            static char **argv;
+            Shiboken::listToArgcArgv(%1, &amp;argc, &amp;argv, "PySideApp");
+            auto retval = new SocExplorerApplication(argc,argv);
+            %PYARG_0 = %CONVERTTOPYTHON[%RETURN_TYPE](retval);
+        </inject-code>
+    </add-function>
     <namespace-type name="SocExplorer">
         <enum-type name="BusSize"/>
         <object-type name="SocExplorerFactory">
@@ -26,17 +39,11 @@
                     <define-ownership class="target" owner="default"/>
                 </modify-argument>
             </modify-function>
-            <modify-function signature="operator()(const QString&amp;,SocExplorer::SEObject*, QObject*) const">
-                <modify-argument index="return">
-                    <parent index="3" action="add"/>
-                    <define-ownership class="native" owner="c++"/>
-                    <define-ownership class="target" owner="default"/>
-                </modify-argument>
-            </modify-function>
         </object-type>
         <object-type name="SEObject"/>
         <object-type name="Workspace"/>
         <object-type name="Soc"/>
+        <object-type name="MainWindow"/>
         <object-type name="SocModule">
             <modify-function signature="parent()const">
                 <modify-argument index="this">

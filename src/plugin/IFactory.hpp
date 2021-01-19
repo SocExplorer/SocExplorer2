@@ -20,21 +20,28 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #pragma once
+#include "Factory/SocExplorerFactory.hpp"
+#include "SocExplorerObject.hpp"
 #include <QObject>
 #include <QtPlugin>
-#include "Soc/SocModule.hpp"
+
+namespace SocExplorer
+{
+class Soc;
+}
 
 namespace SocExplorer::Plugins
 {
-class ISocModule : public SocExplorer::SocModule
+class IFactory : public SocExplorer::SEObject
 {
     Q_OBJECT
 public:
-    ISocModule(const QString& name, Soc* soc, QObject* parent = nullptr)
-            : SocExplorer::SocModule(name,soc, parent)
+    IFactory(const QString& name, QObject* parent = nullptr) : SocExplorer::SEObject(name, parent)
     {
     }
-    virtual ~ISocModule() { }
+    virtual ~IFactory() { }
+    virtual std::vector<std::pair<QString, SEObjectCtor_t*>> factories() = 0;
 };
 }
-Q_DECLARE_INTERFACE(SocExplorer::Plugins::ISocModule, "socexplorer.plugins.SocModule")
+
+Q_DECLARE_INTERFACE(SocExplorer::Plugins::IFactory, "socexplorer.plugins.IFactory")

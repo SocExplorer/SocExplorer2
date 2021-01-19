@@ -19,39 +19,19 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include <QObject>
-#include <QWidget>
+#include "bundled_plugins.hpp"
+#include "rmap_plugin.hpp"
 
-#include <cstdint>
-#include <vector>
-
-#include <range/v3/view.hpp>
-
-#include "Soc/Soc.hpp"
-#include "Soc/SocModule.hpp"
-#include "SocExplorerObject.hpp"
-#include "address.h"
-
-namespace SocExplorer
+template <typename T>
+class GenericSEObjectCtor : public SocExplorer::SEObjectCtor_t
 {
-class Workspace : public SEObject
-{
-    Q_OBJECT
-public:
-    inline void set_root_module(SocModule* module) { m_root_module = module; }
-    inline SocModule* root_module() { return m_root_module; }
-    inline Soc* soc() { return m_soc; }
-
-    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SEObject(name, parent), m_soc { soc }
+    virtual SocExplorer::SEObject* operator()(const QString& name, QObject* parent) const final
     {
-        soc->setParent(this);
+        return new T { name, parent };
     }
-    ~Workspace() = default;
-
-private:
-    Soc* m_soc;
-    SocModule* m_root_module { nullptr };
 };
+
+std::vector<std::pair<QString, SocExplorer::SEObjectCtor_t*>> BundledPlugins::factories()
+{
+    return { { "RMAP", new GenericSEObjectCtor<RmapPlugin> } };
 }

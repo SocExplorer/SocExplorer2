@@ -17,6 +17,7 @@ shiboken2_typesystem  = run_command(python3, 'shiboken-helper.py', '--typesystem
 
 socexplorer_bindings_incs = shiboken2_build_flags + [
     '-I'+meson.current_source_dir()+'/../',
+    '-I'+meson.current_source_dir()+'/../plugins/bundled',
     '-I'+meson.current_source_dir()+'/../../'+opaque_inc_dir,
     '-I'+meson.current_source_dir()+'/../../subprojects/range-v3-0.10.0/include',
     '-I'+meson.current_source_dir()+'/../../subprojects/hedley-11',
@@ -30,22 +31,22 @@ foreach mod:qt5_modules
     socexplorer_bindings_incs += ['-I'+qt_headers_path+'/'+mod]
 endforeach
 
-socexplorer_bindings_src = [files('bindings.h','PySocModule.hpp', 'PySocModule.cpp'),
-                            socexplorer_src, socexplorer_headers]
+socexplorer_bindings_src = [files('bindings.h','PySocModule.hpp', 'PySocModule.cpp', 'SocExplorerApp.hpp', 'SocExplorerApp.cpp'), socexplorer_headers]
 
 subdir('SocExplorerBindings')
 
 shiboken_dep = declare_dependency(compile_args: shiboken2_build_flags,
                                   link_args: shiboken2_link_flags)
 
-socexplorer_bindings_moc_files = qt5.preprocess(moc_headers : 'PySocModule.hpp',
-                                                dependencies : [socexplorer_dep])
+socexplorer_bindings_moc_files = qt5.preprocess(moc_headers : ['PySocModule.hpp', 'SocExplorerApp.hpp'],
+                                                dependencies : [socexplorer_dep, bundled_plugins_dep])
 
 
 socexplorer_bindings = python3.extension_module('SocExplorerBindings',
             socexplorer_bindings_src,shiboken2_generator_out,
             socexplorer_bindings_moc_files,
-            dependencies : [socexplorer_dep, python3_dep, shiboken_dep],
-            include_directories : [numpy_inc]
+            dependencies : [socexplorer_dep, python3_dep, shiboken_dep, bundled_plugins_dep],
+            include_directories : [numpy_inc],
+            extra_files: ['main.py', 'SocExplorerApp.hpp']
 )
 
