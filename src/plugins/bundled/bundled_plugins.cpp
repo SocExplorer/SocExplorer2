@@ -20,6 +20,7 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #include "bundled_plugins.hpp"
+#include "Leon3Soc.hpp"
 #include "rmap_plugin.hpp"
 
 template <typename T>
@@ -29,9 +30,11 @@ class GenericSEObjectCtor : public SocExplorer::SEObjectCtor_t
     {
         return new T { name, parent };
     }
+    virtual QString category() const final { return SocExplorer::category<T>(); };
 };
 
 std::vector<std::pair<QString, SocExplorer::SEObjectCtor_t*>> BundledPlugins::factories()
 {
-    return { { "RMAP", new GenericSEObjectCtor<RmapPlugin> } };
+    return { { "RMAP", new GenericSEObjectCtor<RmapPlugin> },
+        { "Leon3", new GenericSEObjectCtor<Leon3> } };
 }

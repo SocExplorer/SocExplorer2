@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
 --  This file is a part of the SocExplorer Software
---  Copyright (C) 2020, Plasma Physics Laboratory - CNRS
+--  Copyright (C) 2021, Plasma Physics Laboratory - CNRS
 --
 --  This program is free software; you can redistribute it and/or modify
 --  it under the terms of the GNU General Public License as published by
@@ -20,43 +20,18 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #pragma once
-#include <QApplication>
+#include "Soc/Soc.hpp"
 #include <QObject>
 #include <QtPlugin>
-#include <bundled_plugins.hpp>
 
-#if defined(socExplorerApp)
-#undef socExplorerApp
-#endif
-#define socExplorerApp (static_cast<SocExplorerApplication*>(QCoreApplication::instance()))
-
-class SocExplorerApplication : public QApplication
+class Leon3 : public SocExplorer::Soc
 {
     Q_OBJECT
 public:
-    explicit SocExplorerApplication(int& argc, char** argv) : QApplication(argc, argv)
+    Leon3(const QString& name, QObject* parent = nullptr): SocExplorer::Soc(name, parent)
     {
-#ifdef QT_STATICPLUGIN
-
-        Q_INIT_RESOURCE(python_providers);
-#endif
-        Q_INIT_RESOURCE(SocExplorer);
-        Q_IMPORT_PLUGIN(BundledPlugins);
-        setOrganizationName("LPP");
-        setOrganizationDomain("lpp.fr");
-        setApplicationName("SocExplorer");
-        QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-        load_static_plugins();
-    };
-    ~SocExplorerApplication() override {};
-
-private:
-    void load_static_plugins();
+        this->m_endianness = Endianness::Endianness::big;
+        this->m_data_width = SocExplorer::BusSize::s32;
+        this->m_address_width = SocExplorer::BusSize::s32;
+    }
 };
-
-inline SocExplorerApplication* SocExplorerApplication_ctor()
-{
-    static int argc;
-    static char** argv;
-    return new SocExplorerApplication(argc, argv);
-}

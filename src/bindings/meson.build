@@ -22,6 +22,7 @@ socexplorer_bindings_incs = shiboken2_build_flags + [
     '-I'+meson.current_source_dir()+'/../../subprojects/range-v3-0.10.0/include',
     '-I'+meson.current_source_dir()+'/../../subprojects/hedley-11',
     '-I'+meson.current_source_dir()+'/../../subprojects/cpp_utils/include',
+    '-I'+meson.current_source_dir()+'/../../subprojects/spdlog-1.8.1/include',
     '-I'+meson.build_root()+'/subprojects/cpp_utils',
     '-I'+python3.get_path('include'),
     '-I'+qt_headers_path
@@ -31,7 +32,7 @@ foreach mod:qt5_modules
     socexplorer_bindings_incs += ['-I'+qt_headers_path+'/'+mod]
 endforeach
 
-socexplorer_bindings_src = [files('bindings.h','PySocModule.hpp', 'PySocModule.cpp', 'SocExplorerApp.hpp', 'SocExplorerApp.cpp'), socexplorer_headers]
+socexplorer_bindings_src = [files('PySocModule.cpp', 'SocExplorerApp.cpp'), socexplorer_headers]
 
 subdir('SocExplorerBindings')
 
@@ -47,6 +48,6 @@ socexplorer_bindings = python3.extension_module('SocExplorerBindings',
             socexplorer_bindings_moc_files,
             dependencies : [socexplorer_dep, python3_dep, shiboken_dep, bundled_plugins_dep],
             include_directories : [numpy_inc],
-            extra_files: ['main.py', 'SocExplorerApp.hpp']
+            extra_files: ['bindings.h','PySocModule.hpp', 'main.py', 'SocExplorerApp.hpp']
 )
 

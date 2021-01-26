@@ -20,8 +20,9 @@
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
 #include "SocExplorerFactory.hpp"
-SocExplorer::SocExplorerFactory::SocExplorerFactory(QObject *parent)
-    :SEObject("SocExplorerFactory", parent)
+SocExplorer::SocExplorerFactory::SocExplorerFactory(QObject* parent)
+        : SEObject("SocExplorerFactory", parent)
 {
-
+    connect(&details::FactorySingleton::instance(), &details::FactorySingleton::ctor_registered,
+        this, &SocExplorerFactory::ctor_registered);
 }

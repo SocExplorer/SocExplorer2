@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
 --  This file is a part of the SocExplorer Software
---  Copyright (C) 2020, Plasma Physics Laboratory - CNRS
+--  Copyright (C) 2021, Plasma Physics Laboratory - CNRS
 --
 --  This program is free software; you can redistribute it and/or modify
 --  it under the terms of the GNU General Public License as published by
@@ -19,44 +19,13 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include <QApplication>
-#include <QObject>
-#include <QtPlugin>
-#include <bundled_plugins.hpp>
+#include "WorkspacesManager.hpp"
 
-#if defined(socExplorerApp)
-#undef socExplorerApp
-#endif
-#define socExplorerApp (static_cast<SocExplorerApplication*>(QCoreApplication::instance()))
-
-class SocExplorerApplication : public QApplication
+SocExplorer::WorkspacesManager::WorkspacesManager(QObject* parent)
+        : SEObject("WorkspacesManager", parent)
 {
-    Q_OBJECT
-public:
-    explicit SocExplorerApplication(int& argc, char** argv) : QApplication(argc, argv)
-    {
-#ifdef QT_STATICPLUGIN
-
-        Q_INIT_RESOURCE(python_providers);
-#endif
-        Q_INIT_RESOURCE(SocExplorer);
-        Q_IMPORT_PLUGIN(BundledPlugins);
-        setOrganizationName("LPP");
-        setOrganizationDomain("lpp.fr");
-        setApplicationName("SocExplorer");
-        QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-        load_static_plugins();
-    };
-    ~SocExplorerApplication() override {};
-
-private:
-    void load_static_plugins();
-};
-
-inline SocExplorerApplication* SocExplorerApplication_ctor()
-{
-    static int argc;
-    static char** argv;
-    return new SocExplorerApplication(argc, argv);
+    connect(&details::WorkspacesManager::instance(), &details::WorkspacesManager::workspace_created,
+        this, &WorkspacesManager::workspace_created);
 }
+
+SocExplorer::details::WorkspacesManager::WorkspacesManager() : QObject(nullptr) { }

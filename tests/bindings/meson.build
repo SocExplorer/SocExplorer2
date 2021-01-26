@@ -1,9 +1,9 @@
 test_scripts = [
-    'pysocmodule_tests.py',
-    'soc_tests.py',
-    'socexplorerobject_tests.py',
-    'workspace_tests.py',
-    'factory_tests.py'
+    'test_pysocmodule.py',
+    'test_soc.py',
+    'test_socexplorerobject.py',
+    'test_workspace.py',
+    'test_factory.py'
 ]
 
 foreach test:test_scripts

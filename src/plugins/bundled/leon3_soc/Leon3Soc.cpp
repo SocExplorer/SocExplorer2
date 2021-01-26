@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
 --  This file is a part of the SocExplorer Software
---  Copyright (C) 2020, Plasma Physics Laboratory - CNRS
+--  Copyright (C) 2021, Plasma Physics Laboratory - CNRS
 --
 --  This program is free software; you can redistribute it and/or modify
 --  it under the terms of the GNU General Public License as published by
@@ -19,39 +19,4 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include <QObject>
-#include <QWidget>
-
-#include <cstdint>
-#include <vector>
-
-#include <range/v3/view.hpp>
-
-#include "Soc/Soc.hpp"
-#include "Soc/SocModule.hpp"
-#include "SocExplorerObject.hpp"
-#include "address.h"
-
-namespace SocExplorer
-{
-class Workspace : public SEObject
-{
-    Q_OBJECT
-public:
-    inline void set_root_module(SocModule* module) { m_root_module = module; }
-    inline SocModule* root_module() { return m_root_module; }
-    inline Soc* soc() { return m_soc; }
-
-    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SEObject(name, parent), m_soc { soc }
-    {
-        soc->setParent(this);
-    }
-    ~Workspace() = default;
-
-private:
-    Soc* m_soc;
-    SocModule* m_root_module { nullptr };
-};
-}
+#include "Leon3Soc.hpp"

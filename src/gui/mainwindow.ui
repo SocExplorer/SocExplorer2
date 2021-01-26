@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1379</width>
+    <height>824</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,18 +16,47 @@
   <property name="dockNestingEnabled">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget"/>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>29</height>
+     <width>1379</width>
+     <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="workspaceMenu">
+    <property name="title">
+     <string>Workspace</string>
+    </property>
+    <widget class="QMenu" name="newWorkspaceMenu">
+     <property name="title">
+      <string>new</string>
+     </property>
+     <addaction name="actionFake"/>
+    </widget>
+    <addaction name="newWorkspaceMenu"/>
+   </widget>
+   <addaction name="workspaceMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionEmpty">
+   <property name="text">
+    <string>Empty</string>
+   </property>
+  </action>
+  <action name="actionFake">
+   <property name="text">
+    <string>Fake</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

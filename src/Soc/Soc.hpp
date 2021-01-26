@@ -52,7 +52,7 @@ public:
     Soc(const QString& name, QObject* parent = nullptr) : SEObject(name, parent) { }
     virtual ~Soc() = default;
 
-private:
+protected:
     Endianness::Endianness m_endianness { Endianness::Endianness::unknown };
     QVariantMap m_env;
     BusSize m_data_width = BusSize::sUnknown;

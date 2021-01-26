@@ -11,18 +11,18 @@ class ASoc(unittest.TestCase):
 
     def test_default_endianness_is_unknown(self):
         p = SocExplorer.Soc("")
-        self.assertEquals(p.endianness(), Endianness.Endianness.unknown)
+        self.assertEqual(p.endianness(), Endianness.Endianness.unknown)
 
     def test_can_set_and_read_variables(self):
         p = SocExplorer.Soc("")
         p.set_value("some key", 10)
-        self.assertEquals(p.value("some key"), 10)
+        self.assertEqual(p.value("some key"), 10)
 
     def test_can_overwrite_variable(self):
         p = SocExplorer.Soc("")
         p.set_value("some key", 10)
         p.set_value("some key", "another value")
-        self.assertEquals(p.value("some key"), "another value")
+        self.assertEqual(p.value("some key"), "another value")
 
 
 

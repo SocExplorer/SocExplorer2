@@ -28,9 +28,17 @@ class MainWindow;
 }
 namespace SocExplorer
 {
+class SocExplorerFactory;
+class WorkspacesManager;
+class Workspace;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+
+    void update_soc_list();
+    void workspace_created(Workspace*);
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
@@ -38,5 +46,7 @@ public:
 
 private:
     Ui::MainWindow* ui;
+    SocExplorerFactory* m_factory;
+    WorkspacesManager* m_workspace_manager;
 };
 }

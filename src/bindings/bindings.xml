@@ -42,6 +42,7 @@
         </object-type>
         <object-type name="SEObject"/>
         <object-type name="Workspace"/>
+        <object-type name="WorkspacesManager"/>
         <object-type name="Soc"/>
         <object-type name="MainWindow"/>
         <object-type name="SocModule">

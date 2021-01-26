@@ -21,7 +21,7 @@
 ----------------------------------------------------------------------------*/
 
 #include "SocModule.hpp"
-#include "Workspace.hpp"
+#include "Workspaces/Workspace.hpp"
 #include <iostream>
 #include <spdlog/spdlog.h>
 

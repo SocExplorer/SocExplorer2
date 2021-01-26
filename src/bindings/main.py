@@ -78,7 +78,6 @@ class IPythonDockWidget(QDockWidget):
 
         if available_vars is not None:
             self.ipyconsole.pushVariables(available_vars)
-        self.ipyconsole.pushVariables({"blah":self})
 
     def showEvent(self, event):
         """Make sure this widget is raised when it is shown
@@ -92,15 +91,11 @@ def print_process_id():
 
 
 if __name__ == "__main__":
-    #init_resources()
     app = SocExplorerApplication_ctor(sys.argv)
     QtGui.qApp = app
     main_window = SocExplorer.MainWindow()
-    term = IPythonDockWidget(available_vars={"app":app, "main_window":main_window}, custom_banner="SciQLop IPython Console ")
+    term = IPythonDockWidget(available_vars={"app":app, "main_window":main_window, "SocExplorerApplication":SocExplorerApplication, "SocExplorer":SocExplorer}, custom_banner="SocExplorer IPython Console ")
     main_window.addDockWidget(Qt.BottomDockWidgetArea, term)
     main_window.show()
-    #for file in os.listdir('plugins'):
-    #    if os.path.isfile(f"plugins/{file}"):
-    #        exec(open(f"plugins/{file}").read())
     sys.exit(app.exec_())
 

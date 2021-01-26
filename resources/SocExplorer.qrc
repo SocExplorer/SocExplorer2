@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="add.svg">images/Gnome-list-add.svg</file>
+        <file alias="icon.png">images/icon.png</file>
+    </qresource>
+    <qresource prefix="/styles">
+        <file alias="SocExplorer.css">Styles/SocExplorer.css</file>
+    </qresource>
+</RCC>
