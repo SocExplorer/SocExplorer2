@@ -31,16 +31,19 @@ class SEObject : public QObject
     Q_OBJECT
 public:
     SEObject(QObject* parent = nullptr) : QObject(parent) { }
-    SEObject(const QString& name, QObject* parent = nullptr) : QObject(parent)
-    {
-        set_name(name);
-    }
+    SEObject(const QString& name, QObject* parent = nullptr) : QObject(parent) { set_name(name); }
 
     QString name() const { return objectName(); }
     void set_name(const QString& name)
     {
         this->setObjectName(name);
         emit name_changed(name);
+    }
+
+    template <typename T>
+    T* parent_as() const
+    {
+        return qobject_cast<T*>(QObject::parent());
     }
 
     Q_SIGNAL void name_changed(const QString& name);

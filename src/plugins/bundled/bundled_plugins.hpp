@@ -31,6 +31,6 @@ class BundledPlugins : public SocExplorer::Plugins::IFactory
     Q_PLUGIN_METADATA(IID "socexplorer.plugins.IFactory" FILE "bundled_plugins.json")
     Q_INTERFACES(SocExplorer::Plugins::IFactory)
 public:
-    BundledPlugins(QObject* parent = nullptr) : IFactory("RmapPlugin", parent) { }
+    BundledPlugins(QObject* parent = nullptr) : IFactory("BundledPlugins", parent) { }
     virtual std::vector<std::pair<QString, SocExplorer::SEObjectCtor_t*>> factories() final;
 };

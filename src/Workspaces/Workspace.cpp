@@ -19,45 +19,50 @@
 /*--                  Author : Alexis Jeandet
 --                     Mail : alexis.jeandet@lpp.polytechnique.fr
 ----------------------------------------------------------------------------*/
-#pragma once
-#include <QObject>
-#include <QWidget>
+#include "Workspace.hpp"
+#include "Factory/SocExplorerFactory.hpp"
+#include "hedley.h"
 
-#include "Soc/Soc.hpp"
-#include "Soc/SocModule.hpp"
-#include "SocExplorerObject.hpp"
-
-namespace SocExplorer
+SocExplorer::SocModule* find_module(SocExplorer::SocModule* parent, const QString& module)
 {
-class Workspace : public SEObject
+    if (parent->name() == module)
+    {
+        return parent;
+    }
+    else
+    {
+        for (auto child : parent->children())
+        {
+            auto m = find_module(child, module);
+            if (m)
+                return m;
+        }
+    }
+    return nullptr;
+}
+
+
+SocExplorer::SocModule* SocExplorer::Workspace::find_module(const QString& module)
 {
-    Q_OBJECT
-    SocModule* find_module(const QString& module);
+    return ::find_module(m_root_module, module);
+}
 
-public:
-    inline void set_root_module(SocModule* module)
+
+HEDLEY_NON_NULL(2, 3)
+void SocExplorer::Workspace::load_module(
+    SocExplorer::SocModule* parent, SocExplorer::SocModule* module)
+{
+    module->setParent(parent);
+    emit module_loaded(module);
+}
+
+void SocExplorer::Workspace::load_module(
+    const QString& parent, const QString& module, const QString& name)
+{
+    auto p = find_module(parent);
+    if (p)
     {
-        m_root_module = module;
-        if (m_root_module && m_root_module->parent_as<Workspace>() != this)
-            m_root_module->setParent(this);
-        emit module_loaded(m_root_module);
+        auto m = SocExplorerFactory().new_object<SocExplorer::SocModule>(module, name, p);
+        emit module_loaded(m);
     }
-    void load_module(SocModule* parent, SocModule* module);
-    void load_module(const QString& parent, const QString& module, const QString& name);
-    inline SocModule* root_module() { return m_root_module; }
-    inline Soc* soc() { return m_soc; }
-
-    Workspace(Soc* soc, const QString& name, QObject* parent = nullptr)
-            : SEObject(name, parent), m_soc { soc }
-    {
-        soc->setParent(this);
-    }
-    ~Workspace() = default;
-
-    Q_SIGNAL void module_loaded(SocModule* module);
-
-private:
-    Soc* m_soc;
-    SocModule* m_root_module { nullptr };
-};
 }

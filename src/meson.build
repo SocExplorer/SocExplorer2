@@ -1,5 +1,6 @@
 socexplorer_src = files(
 [
+  'Workspaces/Workspace.cpp',
   'Soc/SocModule.cpp',
   'Soc/Soc.cpp',
   'Factory/SocExplorerFactory.cpp',

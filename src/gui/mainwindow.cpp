@@ -40,7 +40,7 @@ void MainWindow::update_soc_list()
         auto action = ui->newWorkspaceMenu->addAction(soc);
 
         connect(action, &QAction::triggered, [soc, this]() {
-            const QString basename("Worspace");
+            const QString basename("Workspace");
             const auto workspaces = m_workspace_manager->workspaces();
             auto i = 1UL;
             while (workspaces.contains(basename + QString::number(i)))

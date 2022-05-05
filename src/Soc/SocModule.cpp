@@ -44,7 +44,7 @@ SocExplorer::Workspace* workspace(SocExplorer::SocModule* module)
 uint64_t SocExplorer::SocModule::read(
     const address64_t address, std::size_t bytes, char* data) const
 {
-    auto p = parent();
+    auto p = parent_as<SocExplorer::SocModule>();
     if (p)
     {
         return p->read(address, bytes, data);
@@ -55,17 +55,12 @@ uint64_t SocExplorer::SocModule::read(
 uint64_t SocExplorer::SocModule::write(
     const address64_t address, std::size_t bytes, char* data) const
 {
-    auto p = parent();
+    auto p = parent_as<SocExplorer::SocModule>();
     if (p)
     {
         return p->write(address, bytes, data);
     }
     return 0UL;
-}
-
-SocExplorer::SocModule* SocExplorer::SocModule::parent() const
-{
-    return qobject_cast<SocModule*>(QObject::parent());
 }
 
 std::vector<SocExplorer::SocModule*> SocExplorer::SocModule::children() const

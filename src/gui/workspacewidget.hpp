@@ -11,11 +11,14 @@ class WorkspaceWidget;
 namespace SocExplorer
 {
 class Workspace;
+class SocModule;
 }
 
 class WorkspaceWidget : public QMainWindow
 {
     Q_OBJECT
+
+    void module_loaded(SocExplorer::SocModule* module);
 
 public:
     explicit WorkspaceWidget(SocExplorer::Workspace* workspace, QWidget* parent = nullptr);

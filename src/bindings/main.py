@@ -94,7 +94,14 @@ if __name__ == "__main__":
     app = SocExplorerApplication_ctor(sys.argv)
     QtGui.qApp = app
     main_window = SocExplorer.MainWindow()
-    term = IPythonDockWidget(available_vars={"app":app, "main_window":main_window, "SocExplorerApplication":SocExplorerApplication, "SocExplorer":SocExplorer}, custom_banner="SocExplorer IPython Console ")
+    term = IPythonDockWidget(available_vars={"app":app,
+                                             "main_window":main_window,
+                                             "SocExplorerApplication":SocExplorerApplication,
+                                             "SocExplorer":SocExplorer,
+                                             "factory":SocExplorer.SocExplorerFactory(),
+                                             "workspaces":SocExplorer.WorkspacesManager(),
+                                             },
+                             custom_banner="SocExplorer IPython Console ")
     main_window.addDockWidget(Qt.BottomDockWidgetArea, term)
     main_window.show()
     sys.exit(app.exec_())

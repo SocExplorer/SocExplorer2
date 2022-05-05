@@ -71,7 +71,6 @@ public:
 
     virtual QWidget* ui() { return nullptr; };
 
-    SocModule* parent() const;
     std::vector<SocModule*> children() const;
 
     SocModule(const QString& name, QObject* parent = nullptr);
